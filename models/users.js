@@ -1,9 +1,14 @@
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
-  isAdmin: String,
   username: String,
+  name: String,
+  description: String,
+  email: String,
   password: String,
+  isPublic: Boolean,
+  profilePicture: String,
+  photos: [String],
 });
 
 const User = mongoose.model("users", userSchema);
