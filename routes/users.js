@@ -184,6 +184,27 @@ router.post("/uploadPhotos/:userId", async (req, res) => {
   }
 });
 
+router.put("/:userId/updateUrl", (req, res) => {
+  const userId = req.params.userId;
+  const newURL = req.body.newURL;
+
+  User.findByIdAndUpdate(userId, { photoBanner: newURL }, { new: true })
+    .then((updatedUser) => {
+      if (!updatedUser) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Utilisateur non trouvé" });
+      }
+      res.status(200).json({ success: true, user: updatedUser });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        error: "Erreur lors de la mise à jour de l'URL",
+      });
+    });
+});
+
 router.delete("/deletePhoto/:userId", async (req, res) => {
   const { userId } = req.params;
   const { photoUrl } = req.query; // Utilisation de req.query pour récupérer le paramètre de requête
