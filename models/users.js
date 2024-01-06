@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+const link = mongoose.Schema({
+  url: String,
+  name: String,
+});
+
 const userSchema = mongoose.Schema({
   username: String,
   name: String,
@@ -10,6 +15,7 @@ const userSchema = mongoose.Schema({
   profilePicture: String,
   photos: [String],
   photoBanner: String,
+  links: [link],
 });
 
 const User = mongoose.model("users", userSchema);
