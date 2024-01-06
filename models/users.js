@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
   isPublic: Boolean,
   profilePicture: String,
   photos: [String],
+  photoBanner: String,
 });
 
 const User = mongoose.model("users", userSchema);
