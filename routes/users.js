@@ -80,7 +80,7 @@ router.put("/updateInfos/:userId", (req, res) => {
 router.put("/updateProfilePicture/:userId", async (req, res) => {
   const { userId } = req.params;
   const id = uniqid();
-  const photoPath = `../tmp/${id}.jpg`;
+  const photoPath = `/tmp/${id}.jpg`;
 
   const resultMove = await req.files.photoFromFront.mv(photoPath);
 
@@ -140,7 +140,7 @@ router.post("/uploadPhotos/:userId", async (req, res) => {
     const uploadResults = await Promise.all(
       images.map(async (image) => {
         const id = uniqid();
-        const photoPath = `../tmp/${id}.jpg`;
+        const photoPath = `/tmp/${id}.jpg`;
 
         await image.mv(photoPath);
         const resultCloudinary = await cloudinary.uploader.upload(photoPath, {
