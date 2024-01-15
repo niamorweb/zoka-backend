@@ -19,6 +19,7 @@ const corsOptions = {
 
 var app = express();
 app.use();
+app.use(cors());
 app.use(fileUpload());
 app.use(logger("dev"));
 app.use(express.json());
