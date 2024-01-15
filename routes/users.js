@@ -180,7 +180,11 @@ router.post("/uploadPhotos/:userId", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ result: false, error: "Failed to upload photos" });
+    res.status(500).json({
+      result: false,
+      error: error,
+      message: "Failed to upload photos",
+    });
   }
 });
 
