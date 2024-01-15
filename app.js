@@ -9,8 +9,16 @@ const cors = require("cors");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
+const corsOptions = {
+  origin: "https://zoka-rouge.vercel.app", // Remplacez par votre domaine
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+  allowedHeaders: "Content-Type,Authorization",
+};
+
 var app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(fileUpload());
 app.use(logger("dev"));
 app.use(express.json());
