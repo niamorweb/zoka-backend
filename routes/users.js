@@ -36,7 +36,22 @@ router.post("/signup", (req, res) => {
       });
 
       newUser.save().then((data) => {
-        res.json({ result: true, data: data });
+        // Créer un dossier Cloudinary pour cet utilisateur
+        const userCloudinaryFolder = `users/${data._id}`;
+        cloudinary.api.create_folder(userCloudinaryFolder, (error, result) => {
+          if (error) {
+            console.error(
+              "Erreur lors de la création du dossier Cloudinary :",
+              error
+            );
+            res.json({
+              result: false,
+              error: "Error creating Cloudinary folder",
+            });
+          } else {
+            res.json({ result: true, data: data });
+          }
+        });
       });
     } else {
       res.json({ result: false, error: "Username already exists" });
