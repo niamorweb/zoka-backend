@@ -37,7 +37,7 @@ router.post("/signup", (req, res) => {
 
       newUser.save().then((data) => {
         // Créer un dossier Cloudinary pour cet utilisateur
-        const userCloudinaryFolder = `users/${data._id}`;
+        const userCloudinaryFolder = `zoka/users_data/${data._id}`;
         cloudinary.api.create_folder(userCloudinaryFolder, (error, result) => {
           if (error) {
             console.error(
