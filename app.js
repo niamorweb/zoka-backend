@@ -3,25 +3,30 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 require("dotenv").config();
-const bodyParser = require("body-parser");
 
 var logger = require("morgan");
 const cors = require("cors");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
-const corsOptions = {
-  origin: "https://zoka-rouge.vercel.app", // Remplacez par votre domaine
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-  allowedHeaders: "Content-Type,Authorization",
-};
-
 var app = express();
-app.use(cors());
-app.use(bodyParser.json({ limit: "100mb" }));
-app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
+const allowedOrigins = ["https://zoka-rouge.vercel.app/"];
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
+app.use(
+  fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 }, // Limite de taille de fichier (ici, 50 Mo)
+  })
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
