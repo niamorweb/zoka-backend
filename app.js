@@ -10,7 +10,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 const corsOptions = {
-  origin: "https://zoka-rouge.vercel.app", // Remplacez par votre domaine
+  origin: "https://zoka-rouge.vercel.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
