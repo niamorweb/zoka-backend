@@ -10,7 +10,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 var app = express();
-const allowedOrigins = ["https://zoka-rouge.vercel.app/"];
+const allowedOrigins = ["https://zoka-rouge.vercel.app"];
 app.use(
   cors({
     origin: function (origin, callback) {
