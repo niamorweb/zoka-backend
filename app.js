@@ -24,7 +24,7 @@ app.use(
 );
 app.use(
   fileUpload({
-    limits: { fileSize: 50 * 1024 * 1024 }, // Limite de taille de fichier (ici, 50 Mo)
+    limits: { fileSize: 150 * 1024 * 1024 }, // Limite de taille de fichier (ici, 50 Mo)
   })
 );
 app.use(logger("dev"));
