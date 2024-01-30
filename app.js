@@ -3,6 +3,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 require("dotenv").config();
+const bodyParser = require("body-parser");
 
 var logger = require("morgan");
 const cors = require("cors");
@@ -19,11 +20,8 @@ const corsOptions = {
 
 var app = express();
 app.use(cors());
-app.use(
-  fileUpload({
-    limits: { fileSize: 50 * 1024 * 1024 },
-  })
-);
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
