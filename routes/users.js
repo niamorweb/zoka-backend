@@ -17,6 +17,31 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+function getUserCloudinaryFolder(userId) {
+  return `zoka/users_data/${userId}/gallery/`;
+}
+
+const createFolder = (userId) => {
+  const folderName = `zoka/users_data/${userId}`;
+
+  // Utilisez l'API de téléchargement pour créer un dossier
+  cloudinary.uploader.upload(
+    "utils/init_folder.jpg",
+    {
+      public_id: `${folderName}/my_image`,
+      invalidate: true,
+    },
+    (error, result) => {
+      if (error) console.error("Error:", error);
+      else console.log("Folder created:", result);
+    }
+  );
+};
+
+router.post("/test", (req, res) => {
+  createFolder("test1");
+});
+
 router.post("/signup", (req, res) => {
   const { username, email, password } = req.body;
 
@@ -36,7 +61,6 @@ router.post("/signup", (req, res) => {
       });
 
       newUser.save().then((data) => {
-        // Créer un dossier Cloudinary pour cet utilisateur
         const userCloudinaryFolder = `zoka/users_data/${data._id}`;
         cloudinary.api.create_folder(userCloudinaryFolder, (error, result) => {
           if (error) {
@@ -152,13 +176,17 @@ router.post("/uploadPhotos/:userId", async (req, res) => {
   }
 
   try {
+    const userCloudinaryFolder = `zoka/users_data/${userId}/gallery/`;
+
     const uploadResults = await Promise.all(
       images.map(async (image) => {
         const id = uniqid();
-        const photoPath = `/tmp/${id}.jpg`;
+        const photoPath = `tmp/${id}.jpg`;
 
         await image.mv(photoPath);
+
         const resultCloudinary = await cloudinary.uploader.upload(photoPath, {
+          folder: userCloudinaryFolder, // Utiliser le dossier spécifique du user
           quality: 40,
           format: "webp",
           height: 1000,
